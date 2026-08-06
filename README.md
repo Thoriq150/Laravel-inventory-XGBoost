@@ -9,331 +9,364 @@ Prediksi yang dihasilkan bukan berupa stok akhir, melainkan jumlah barang yang d
 
 ---
 
-# Teknologi
+## 🚀 Features
 
-- PHP 8.4
-- Laravel 9
-- MySQL
-- Python 3.1
+- Dashboard
+- Product Management
+- Category Management
+- Supplier Management
+- Customer Management
+- Inventory Management
+- Incoming Goods
+- Outgoing Goods
+- Sales History
+- Automatic Stock Prediction (XGBoost)
+- Stock Status Recommendation
+- Reports
+
+---
+
+## 🛠️ Technologies Used
+
+### Backend
+
+- Laravel 
+- PHP 
+- MySQL 
+
+### Frontend
+
+- HTML
+- CSS
+- Bootstrap
+- JavaScript
+
+### Machine Learning
+
+- Python 
 - XGBoost
 - Pandas
-- Scikit-Learn
-- Bootstrap 5
-- ApexCharts
-- Tabler UI
+- NumPy
+- Scikit-learn
+
+### Server
+
+- Laragon
+- Apache
+- MySQL
 
 ---
 
-# Fitur Sistem
+# System Requirements
 
-## Admin
+Before running the application, make sure your computer has:
 
-- Dashboard
-- Manajemen Barang
-- Manajemen Kategori
-- Manajemen Supplier
-- Monitoring Stok
-- Laporan
-- Prediksi Stok AI
-- Pengaturan Akun
-
-Admin bertugas mengelola seluruh data master serta menjalankan proses prediksi menggunakan model XGBoost.
-
----
-## Akun  Admin
-```
-email : admin@gmail.com
-password : password
-```
-
-## Customer
-
-- Dashboard
-- Barang Masuk
-- Barang Keluar
-- Riwayat Transaksi
-- Prediksi Barang
-- Pengaturan Akun
-
-Customer hanya dapat melihat dan mengelola transaksi miliknya sendiri.
+- Windows 10/11
+- Laragon
+- PHP 8.2+
+- Composer
+- Python 3.10+
+- MySQL
 
 ---
 
-# Hak Akses
+# Installation Guide
 
-## Admin
+## 1. Copy Project
 
-- CRUD Barang
-- CRUD Supplier
-- CRUD Kategori
-- Melihat seluruh transaksi
-- Menjalankan proses prediksi AI
-- Melihat laporan
-- Melihat seluruh hasil prediksi
-
-
-## Customer
-
-- Login
-- Input Barang Masuk
-- Input Barang Keluar
-- Melihat riwayat transaksi sendiri
-- Melihat hasil prediksi
-- Mengubah profil
-
----
-
-# Konsep Prediksi
-
-Model AI menggunakan histori transaksi keluar sebagai dataset pelatihan.
-
-Dataset dibentuk dari:
-
-- tanggal
-- barang_id
-- jumlah keluar
-
-Kemudian diproses menggunakan Python dan algoritma XGBoost sehingga menghasilkan prediksi jumlah penjualan pada periode berikutnya.
-
-Alur proses:
+Copy the project folder into
 
 ```
-Histori Transaksi Keluar
-            │
-            ▼
-       Dataset Training
-            │
-            ▼
-      Python + XGBoost
-            │
-            ▼
-Prediksi Jumlah Penjualan
-            │
-            ▼
- Simpan ke tabel prediksi_stok
-            │
-            ▼
- Ditampilkan pada Laravel
+C:\laragon\www\
 ```
 
 ---
 
-# Status Prediksi
+## 2. Start Laragon
 
-Setelah memperoleh hasil prediksi, sistem membandingkan stok saat ini dengan prediksi penjualan.
+Open Laragon
 
-Kategori status:
-
-### Aman
+Click
 
 ```
-Stok > Prediksi × 1.2
+Start All
 ```
 
-Stok masih jauh di atas kebutuhan.
+Ensure:
+
+- Apache Running
+- MySQL Running
 
 ---
 
-### Mendekati Minimum
+## 3. Create Database
+
+Open browser
 
 ```
-Prediksi ≤ Stok ≤ Prediksi × 1.2
+http://localhost/phpmyadmin
 ```
 
-Stok mulai mendekati batas kebutuhan sehingga perlu dipantau.
+Create a database
 
----
-
-### Restock
+Example:
 
 ```
-Stok < Prediksi
-```
-
-Stok diperkirakan tidak mencukupi sehingga disarankan melakukan restock.
-
----
-
-# Struktur Database
-
-Tabel utama
-
-```
-users
-barang
-kategori
-supplier
-transaksi_masuk
-transaksi_keluar
-detail_transaksi
-prediksi_stok
-```
-
-Relasi transaksi menggunakan tabel:
-
-```
-detail_transaksi
-```
-
-sehingga satu transaksi dapat memiliki lebih dari satu barang.
-
----
-
-# Struktur Folder
-
-```
-app
- ├── Http
- │    ├── Controllers
- │    │      ├── Admin
- │    │      └── Customer
- │    └── Models
-
-resources
- └── views
-      ├── admin
-      ├── customer
-      └── layouts
-
-routes
- └── web.php
-
-database
-
-ai
- ├── python_predict.py
- ├── dataset.csv
- └── model_xgboost.pkl
+smartstock
 ```
 
 ---
 
-# Instalasi
+## 4. Import Database
 
-Clone repository
-
-```bash
-git clone https://github.com/username/inventory-xgboost.git
-```
-
-Masuk folder project
-
-```bash
-cd inventory-xgboost
-```
-
-Install dependency
-
-```bash
-composer install
-```
-
-Copy file environment
-
-```bash
-cp .env.example .env
-```
-
-Generate key
-
-```bash
-php artisan key:generate
-```
-
-Konfigurasi database pada file `.env`
+Click
 
 ```
-DB_DATABASE=inventory
+Import
+```
+
+Select
+
+```
+database.sql
+```
+
+Click
+
+```
+Go
+```
+
+> **Note**
+>
+> This project already uses **database.sql**, therefore you **DO NOT** need to run migration.
+
+---
+
+## 5. Configure Environment
+
+Open
+
+```
+.env
+```
+
+Adjust database configuration
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=smartstock
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-Migrasi database
+Adjust according to your MySQL configuration.
 
-```bash
-php artisan migrate
+---
+
+## 6. Install Composer Dependency
+
+Open Terminal
+
+```
+composer install
 ```
 
-Jalankan server
+---
 
-```bash
+## 7. Generate Application Key
+
+Run
+
+```
+php artisan key:generate
+```
+
+---
+
+## 8. Storage Link
+
+Run
+
+```
+php artisan storage:link
+```
+
+Only if the application stores files in storage.
+
+---
+
+## 9. Run Laravel
+
+```
+php artisan serve
+```
+
+Open browser
+
+```
+http://127.0.0.1:8000
+```
+
+or
+
+```
+http://localhost:8000
+```
+
+---
+
+# Running Machine Learning Prediction
+
+This application integrates Python with Laravel for inventory prediction.
+
+If prediction is required manually, run the prediction script:
+
+```
+python predict.py
+```
+
+or use the corresponding Python prediction file contained in this project.
+
+Prediction results will be stored in the database and displayed in the application.
+
+---
+
+# Login
+
+Administrator
+
+```
+Email    : admin@gmail.com
+Password : password
+```
+
+---
+
+# Project Structure
+
+```
+app/
+bootstrap/
+config/
+database/
+public/
+resources/
+routes/
+storage/
+vendor/
+
+database.sql
+README.md
+```
+
+---
+
+# Notes
+
+- Database already exists in **database.sql**
+- Migration is **NOT REQUIRED**
+- Apache and MySQL must be running
+- Configure `.env` before running
+- Make sure Composer dependencies have been installed
+
+---
+
+# Troubleshooting
+
+## Error
+
+```
+Class not found
+```
+
+Solution
+
+```
+composer install
+composer dump-autoload
+```
+
+---
+
+## Error
+
+```
+APP_KEY missing
+```
+
+Solution
+
+```
+php artisan key:generate
+```
+
+---
+
+## Error
+
+```
+Database connection failed
+```
+
+Check
+
+```
+.env
+```
+
+Database name
+
+Username
+
+Password
+
+---
+
+## Error
+
+```
+404 Not Found
+```
+
+Run
+
+```
 php artisan serve
 ```
 
 ---
 
-# Menjalankan Prediksi
-
-Masuk ke halaman:
+## Error
 
 ```
-Admin
-→ Prediksi Stok
-→ Jalankan Prediksi
+CSS or JS not loaded
 ```
 
-Laravel akan menjalankan
+Check
 
 ```
-python ai/python_predict.py
+public/dist
 ```
 
-Python akan:
-
-- membaca histori transaksi keluar
-- melakukan preprocessing
-- melatih model XGBoost
-- menghasilkan prediksi
-- menyimpan hasil ke tabel
-
-```
-prediksi_stok
-```
+and ensure assets exist.
 
 ---
 
-# Dashboard Prediksi
+# Developer
 
-Halaman prediksi menampilkan:
+**Thoriq Azhar Fauzan**
 
-- Ringkasan hasil prediksi
-- Grafik Stok Saat Ini vs Prediksi Penjualan
-- Status Prediksi
-- Tabel hasil prediksi
+Universitas Pelita Bangsa
 
-Kolom tabel:
+Bachelor of Informatics Engineering
 
-- Nama Barang
-- Stok Saat Ini
-- Prediksi Penjualan
-- Batas Stok
-- Tanggal Prediksi
-- Status
+2026
 
 ---
 
-# Algoritma
+# License
 
-Model Machine Learning:
-
-```
-Extreme Gradient Boosting (XGBoost)
-```
-
-Model digunakan untuk mempelajari pola penjualan berdasarkan histori transaksi keluar dan menghasilkan estimasi jumlah barang yang akan terjual pada periode berikutnya.
-
----
-
-# Pengembangan Selanjutnya
-
-Beberapa fitur yang dapat dikembangkan:
-
-- Notifikasi otomatis restock
-- Prediksi multi-periode
-- Forecast musiman
-- Integrasi supplier otomatis
-- Export laporan PDF
-- Dashboard analitik penjualan
-- API Mobile
-
----
+This project was developed for academic purposes (Final Project / Undergraduate Thesis).
