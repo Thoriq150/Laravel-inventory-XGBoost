@@ -1,0 +1,234 @@
+===========================================
+SMARTSTOCK UMKM
+PANDUAN MENJALANKAN APLIKASI
+===========================================
+
+A. PERSYARATAN
+
+Sebelum menjalankan aplikasi, pastikan perangkat telah terinstall:
+
+1. Laragon
+2. PHP versi 8.2 
+3. Composer
+4. Python 3.1
+5. MySQL
+
+===========================================
+
+B. LANGKAH MENJALANKAN APLIKASI
+
+1. Copy Folder Project
+
+Pindahkan folder project ke:
+
+C:\laragon\www\
+
+===========================================
+
+2. Jalankan Laragon
+
+Buka aplikasi Laragon.
+
+Klik:
+
+Start All
+
+Pastikan:
+
+- Apache Running
+- MySQL Running
+
+===========================================
+
+3. Membuat Database
+
+Buka browser kemudian akses:
+
+http://localhost/phpmyadmin
+
+Buat database baru dengan nama:
+
+inventori_db
+
+(Setelah database dibuat, jangan menjalankan migrate.)
+
+===========================================
+
+4. Import Database
+
+Klik menu:
+
+Import
+
+Kemudian pilih file:
+
+gudangku.sql
+
+Lalu klik:
+
+Go
+
+Catatan:
+
+Aplikasi ini menggunakan file database.sql sehingga tidak perlu menjalankan perintah:
+
+php artisan migrate
+
+===========================================
+
+5. Konfigurasi File .env
+
+Buka file:
+
+.env
+
+Sesuaikan konfigurasi database berikut:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=inventori_db
+DB_USERNAME=root
+DB_PASSWORD=
+
+Sesuaikan apabila menggunakan konfigurasi MySQL yang berbeda.
+
+===========================================
+
+6. Install Dependency
+
+Buka Terminal atau CMD pada folder project kemudian jalankan:
+
+composer install
+
+===========================================
+
+7. Generate Application Key
+
+Jalankan perintah:
+
+php artisan key:generate
+
+===========================================
+
+8. Storage Link (Opsional)
+
+Apabila aplikasi menggunakan folder storage, jalankan:
+
+php artisan storage:link
+
+Jika aplikasi berjalan tanpa storage, langkah ini dapat dilewati.
+
+===========================================
+
+9. Menjalankan Aplikasi
+
+Masuk ke folder project kemudian jalankan:
+
+php artisan serve
+
+Buka browser:
+
+http://127.0.0.1:8000
+
+atau
+
+http://localhost:8000
+
+===========================================
+
+C. MENJALANKAN FITUR PREDIKSI
+
+Aplikasi menggunakan algoritma XGBoost yang dibuat menggunakan Python.
+
+Apabila diperlukan menjalankan proses prediksi secara manual, jalankan file Python sesuai dengan file yang terdapat pada project.
+
+Contoh:
+
+python predict.py
+
+(Hasil prediksi akan tersimpan ke database dan ditampilkan pada sistem.)
+
+===========================================
+
+D. AKUN LOGIN
+
+Administrator
+email : admin@gmail.com
+password : password
+user2 
+email : ayas@gmail.com 
+password: ayassandor
+
+===========================================
+
+E. TROUBLESHOOTING
+
+1. Jika muncul error APP_KEY
+
+Jalankan:
+
+php artisan key:generate
+
+-------------------------------------------
+
+2. Jika muncul error Class Not Found
+
+Jalankan:
+
+composer install
+
+kemudian
+
+composer dump-autoload
+
+-------------------------------------------
+
+3. Jika aplikasi tidak dapat terhubung ke database
+
+Periksa kembali file .env dan pastikan:
+
+- Nama database benar
+- Username benar
+- Password benar
+
+-------------------------------------------
+
+4. Jika CSS atau tampilan tidak muncul
+
+Pastikan folder:
+
+public/dist
+
+telah tersedia.
+
+-------------------------------------------
+
+5. Jika Apache atau MySQL tidak berjalan
+
+Pastikan Laragon telah diaktifkan dengan menekan tombol:
+
+Start All
+
+===========================================
+
+Aplikasi ini dibuat menggunakan:
+
+- Laravel
+- PHP
+- MySQL
+- Python
+- XGBoost
+- Bootstrap
+- Laragon
+
+===========================================
+
+Developer
+
+Thoriq Azhar Fauzan
+Universitas Pelita Bangsa
+Program Studi Teknik Informatika
+2026
+
+===========================================
